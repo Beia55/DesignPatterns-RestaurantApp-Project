@@ -1,5 +1,6 @@
 ﻿using Restaurant.OrderCommand;
 using Restaurant.Resources;
+using Restaurant.StockDB;
 using Restaurant.VAT;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Restaurant.Menu.MenuBuilders
         public MenuItem _menuItem;
         public Order _order = Order.Instance;
         DataMenuItems _data = new DataMenuItems();
+
+        public string FruitType { get; set; }
 
         public void BuildWater()
         {
@@ -33,15 +36,17 @@ namespace Restaurant.Menu.MenuBuilders
             this._order.AddMenuItem(this._menuItem);
         }
 
-        public void BuildLemonade()
+        public void BuildLemonade(string type)
         {
-            this._menuItem = new MenuItem(_data.LemonadeDrink[0], Convert.ToDouble(_data.LemonadeDrink[1]), _data.LemonadeDrink[2], VATTypes.ForNATURALDRINK);
+            this.FruitType = type;
+            this._menuItem = new MenuItem(this.FruitType.ToUpper()+" "+_data.LemonadeDrink[0], Convert.ToDouble(_data.LemonadeDrink[1]), _data.LemonadeDrink[2], VATTypes.ForNATURALDRINK);
             this._order.AddMenuItem(this._menuItem);
         }
 
-        public void BuildFresh()
+        public void BuildFresh(string type)
         {
-            this._menuItem = new MenuItem(_data.FreshDrink[0], Convert.ToDouble(_data.FreshDrink[1]), _data.FreshDrink[2], VATTypes.ForNATURALDRINK);
+            this.FruitType = type;
+            this._menuItem = new MenuItem(this.FruitType.ToUpper() + " " + _data.FreshDrink[0], Convert.ToDouble(_data.FreshDrink[1]), _data.FreshDrink[2], VATTypes.ForNATURALDRINK);
             this._order.AddMenuItem(this._menuItem);
         }
 

@@ -2,19 +2,22 @@
 using Restaurant.Menu;
 using Restaurant.Menu.MenuBuilders;
 using Restaurant.Resources;
+using Restaurant.StockDB;
 
 namespace Restaurant.OrderCommand
 {
+    /// <summary>
+    /// Sa nu uit sa fac ca sa fie dinamice si comenzile (acum am doar doua ID-Order predefinite.)
+    /// Sa mai pun un while
+    /// </summary>
     class Cart
     {
         DataMenuItems _data = new DataMenuItems();
         ConsoleTableDisplay _consoleDisplay = new ConsoleTableDisplay();
         MenuBuilder menu = new MenuBuilder();
-        
-        // din cash register cu Cart ca si parametru, ca sa salvez direct mai multe carturi pe care 
-        // sa le adune
 
-        // si aici voi pune conditiile pentru o consola dinamica (toate conditiile pentru buider)
+        ModelItemStock model = ModelItemStock.Instance;
+        Stock stock = new Stock();
 
         private bool Continue()
         {
@@ -83,9 +86,39 @@ namespace Restaurant.OrderCommand
             }
         }
 
+        private string ChooseFruitForDrink()
+        {
+            string orange = "oranges";
+            string lemon = "lemons";
+            Console.WriteLine("Please, select the fruit type you prefer: \n" +
+                "Press 1 for: " + orange + " - default \n" +
+                "Press 2 for: " + lemon);
+            var type = Console.ReadLine();
+            if (type == "1")
+            {
+                return orange;
+            }
+            else if (type == "2")
+            {
+                return lemon;
+            }
+            else
+            {
+                Console.WriteLine("Command doesn't exist ! Default = " + orange);
+                return orange;
+            }
+        }
+
+        private void OutOfStock()
+        {
+            Console.WriteLine("Sorry, the fruit is out of stock");
+        }
+
+
         private void OrderPerId()
         {
             Console.WriteLine("\n\n\n");
+
             var endOrder = false;
 
             while (endOrder == false)
@@ -196,13 +229,41 @@ namespace Restaurant.OrderCommand
                 }
                 else if (itemID == _data.LemonadeDrink[3] || itemID == _data.LemonadeDrink[3].ToLower() || itemID == _data.LemonadeDrink[3].ToUpper())
                 {
-                    menu.Drink.BuildLemonade();
-                    endOrder = this.Continue();
+                    string fruitType = this.ChooseFruitForDrink();
+                    int availableStock = model.UseFruitsForDrink(fruitType);
+                    stock.AddData(fruitType, availableStock);
+
+                    Console.WriteLine("AVAILABELE NO OF FRUITS --- " + availableStock);
+                    
+                    if (availableStock != -1)
+                    {
+                        menu.Drink.BuildLemonade(fruitType);
+                        endOrder = this.Continue();
+                    } else
+                    {
+                        this.OutOfStock();
+                        endOrder = this.Continue();
+                    }
+                    
                 }
                 else if (itemID == _data.FreshDrink[3] || itemID == _data.FreshDrink[3].ToLower() || itemID == _data.FreshDrink[3].ToUpper())
                 {
-                    menu.Drink.BuildFresh();
-                    endOrder = this.Continue();
+                    string fruitType = this.ChooseFruitForDrink();
+                    int availableStock = model.UseFruitsForDrink(fruitType);
+                    stock.AddData(fruitType, availableStock);
+
+                    Console.WriteLine("AVAILABELE NO OF FRUITS --- " + availableStock);
+
+                    if (availableStock != -1)
+                    {
+                        menu.Drink.BuildFresh(fruitType);
+                        endOrder = this.Continue();
+                    }
+                    else
+                    {
+                        this.OutOfStock();
+                        endOrder = this.Continue();
+                    }
                 }
                 else if (itemID == _data.CoffeeDrink[3] || itemID == _data.CoffeeDrink[3].ToLower() || itemID == _data.CoffeeDrink[3].ToUpper())
                 {
@@ -258,28 +319,9 @@ namespace Restaurant.OrderCommand
 
         public void ChooseItems()
         {
+            stock.GetData();
             _consoleDisplay.DisplayTable();
-
             this.OrderPerId();
-
-            /*menu.Meat.BuildSteak(MeatType.Medium, "Mashed Potatoes");
-            menu.Meat.BuildChicken("French Fries");
-
-            Console.WriteLine("HERE --- " + menu.ToString() + "\n");
-            menu.ChangeIdOrder();
-
-            Console.WriteLine("\n \n \n START NEW TASK ---------------------\n");
-            menu.Meat.BuildSteak(MeatType.WellCooked, "Rice");
-            Console.WriteLine("HERE --- " + menu.ToString() + "\n");
-            menu.ChangeIdOrder();
-
-            Console.WriteLine("\n \n \n START NEW TASK ---------------------\n");
-            menu.Desert.BuildIcecream();
-            Console.WriteLine("HERE --- " + menu.ToString() + "\n");
-
-            menu.ChangeIdOrder();
-            Console.WriteLine("\n \n \n START NEW TASK ---------------------\n");*/
-
         }
     }
 }
