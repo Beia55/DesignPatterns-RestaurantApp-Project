@@ -1,5 +1,6 @@
 ﻿using Restaurant.Menu.MenuBuilders;
 using Restaurant.OrderCommand;
+using Restaurant.StockDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,12 @@ namespace Restaurant.Menu
         public DressingBuilder Dressing = new DressingBuilder();
         public DesertBuilder Desert = new DesertBuilder();
         public DrinksBuilder Drink = new DrinksBuilder();
+
+        private IStockArgs model = ModelItemStock.Instance;
+        public MenuBuilder()
+        {
+            model.InstantiateDrinkBuilder(this.Drink);
+        }
 
         private Order _order = Order.Instance;
         

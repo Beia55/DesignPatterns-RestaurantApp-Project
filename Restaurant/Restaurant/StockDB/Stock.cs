@@ -1,6 +1,7 @@
 ﻿using Nancy.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Restaurant.Menu.MenuBuilders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace Restaurant.StockDB
 {
-    public class ModelItemStock
+    public class ModelItemStock: IStockArgs
     {
         private static readonly object _lockObject = new object();
         private static ModelItemStock _model;
         private static int _counter = 0;
+        private DrinksBuilder _drink;
 
         public int Oranges { get; set; }
         public int Lemons { get; set; }
@@ -77,6 +79,28 @@ namespace Restaurant.StockDB
                 "Sugar-" + this.Sugar + "\n" +
                 "Water-" + this.Water + "\n" +
                 "Cafee-" + this.Cafee + "\n\n";
+        }
+
+        public DrinksBuilder InstantiateDrinkBuilder(DrinksBuilder drink)
+        {
+            this._drink = drink;
+            return _drink;
+        }
+
+        public void Notify(string type)
+        {
+            if (type == "oranges" && this.Oranges < 2)
+            {
+                Console.WriteLine(this._drink.Update() + " the "+ type + " stock isn't enought !");
+            }else if(type == "lemons" && this.Lemons < 2)
+            {
+                Console.WriteLine(this._drink.Update() + " the " + type + " stock isn't enought !");
+            }
+            else
+            {
+                Console.WriteLine(this._drink.Update() + " it is ready !");
+            }
+            this._drink.SetDrinkName();
         }
     }
 

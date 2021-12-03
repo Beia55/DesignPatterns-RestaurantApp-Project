@@ -238,29 +238,33 @@ namespace Restaurant.OrderCommand
                     if (availableStock != -1)
                     {
                         menu.Drink.BuildLemonade(fruitType);
+                        model.Notify(fruitType);
                         endOrder = this.Continue();
                     } else
                     {
+                        model.Notify(fruitType);
                         this.OutOfStock();
                         endOrder = this.Continue();
                     }
-                    
+
                 }
                 else if (itemID == _data.FreshDrink[3] || itemID == _data.FreshDrink[3].ToLower() || itemID == _data.FreshDrink[3].ToUpper())
                 {
                     string fruitType = this.ChooseFruitForDrink();
                     int availableStock = model.UseFruitsForDrink(fruitType);
                     stock.AddData(fruitType, availableStock);
-
+                    
                     Console.WriteLine("AVAILABELE NO OF FRUITS --- " + availableStock);
 
                     if (availableStock != -1)
                     {
                         menu.Drink.BuildFresh(fruitType);
+                        model.Notify(fruitType);
                         endOrder = this.Continue();
                     }
                     else
                     {
+                        model.Notify(fruitType);
                         this.OutOfStock();
                         endOrder = this.Continue();
                     }
