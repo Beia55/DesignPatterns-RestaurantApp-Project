@@ -6,10 +6,6 @@ using Restaurant.StockDB;
 
 namespace Restaurant.OrderCommand
 {
-    /// <summary>
-    /// Sa nu uit sa fac ca sa fie dinamice si comenzile (acum am doar doua ID-Order predefinite.)
-    /// Sa mai pun un while
-    /// </summary>
     class Cart
     {
         DataMenuItems _data = new DataMenuItems();
@@ -123,7 +119,7 @@ namespace Restaurant.OrderCommand
 
             while (endOrder == false)
             {
-                Console.WriteLine("Write item id HERE: ");
+                Console.WriteLine("Write item id here: ");
                 string itemID = "";
                 itemID = Console.ReadLine();
                     // PIZZA

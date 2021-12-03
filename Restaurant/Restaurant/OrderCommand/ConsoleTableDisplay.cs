@@ -16,12 +16,12 @@ namespace Restaurant.OrderCommand
         public void DisplayTable()
         {
             Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("\n\n\n       ----------> RESTAURANT MENU <----------     ");
+            Console.WriteLine("\n\n       ----------> RESTAURANT MENU <----------     \n\n");
             Console.BackgroundColor = ConsoleColor.Black;
 
-            Console.WriteLine("     Here is the menu with your options. \n" +
-                "       Please look carefully and choose what you want. \n" +
-                "       For the desired type, please enter the corresponding code, displayed next to each item ! \n\n\n");
+            Console.WriteLine(" ~~~ Here is the menu with your options. \n" +
+                " # Please look carefully and choose what you want. \n" +
+                " # For the desired type, please enter the corresponding code, displayed next to each item ! \n\n\n");
 
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.Write("           ----- PIZZA -----           \n");

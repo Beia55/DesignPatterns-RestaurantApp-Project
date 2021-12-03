@@ -74,11 +74,12 @@ namespace Restaurant.StockDB
 
         public override string ToString()
         {
-            return "\n\nOranges-" + this.Oranges + "\n" +
-                "Lemons-" + this.Lemons + "\n" +
-                "Sugar-" + this.Sugar + "\n" +
-                "Water-" + this.Water + "\n" +
-                "Cafee-" + this.Cafee + "\n\n";
+            return "\n\n" +
+                "|| Oranges = " + this.Oranges + "\n" +
+                "|| Lemons = " + this.Lemons + "\n" +
+                "|| Sugar = " + this.Sugar + "\n" +
+                "|| Water = " + this.Water + "\n" +
+                "|| Cafee = " + this.Cafee + "\n\n";
         }
 
         public DrinksBuilder InstantiateDrinkBuilder(DrinksBuilder drink)

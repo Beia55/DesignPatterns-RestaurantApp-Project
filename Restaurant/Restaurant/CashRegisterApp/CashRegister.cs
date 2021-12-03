@@ -67,8 +67,9 @@ namespace Restaurant.CashRegisterApp
             bill.TotalPrice = bill._listMenuItems.Sum(x => x.FinalPrice);
             //
 
+            Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(" -----> Bill ");
+            Console.Write("\n\n -----> Bill ");
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("from Cash Register for Order ");
             Console.ForegroundColor = ConsoleColor.Red;
@@ -93,7 +94,7 @@ namespace Restaurant.CashRegisterApp
 
         public void PrintBills()
         {
-            Console.WriteLine();
+            Console.WriteLine("Here, I will print the the all the bills per day");
         }
 
         public void PrintHistory()
@@ -103,8 +104,9 @@ namespace Restaurant.CashRegisterApp
             /*this.BillsList.ForEach(x => Console.WriteLine("\n"+x.ToString()));*/
             foreach (var bill in this.BillsList)
             {
+                Console.BackgroundColor = ConsoleColor.Cyan;
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(" -----> Bill ");
+                Console.Write("\n -----> Bill ");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("from Cash Register for Order ");
                 Console.ForegroundColor = ConsoleColor.Red;
